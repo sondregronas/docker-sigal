@@ -10,10 +10,7 @@
 # Gallery title. Can be set here or as the '--title' option of the `sigal
 # build` command, or in the 'index.md' file of the source directory.
 # The priority order is: cli option > settings file > index.md file
-
-import os
-
-title = os.getenv('GALLERY_TITLE', 'Gallery')
+# title = "Sigal test gallery"
 
 # ---------------------
 # General configuration
@@ -132,8 +129,6 @@ ign_i = [f'*\'{str(i).zfill(2)}\'*' for i in [*range(3, 10), *range(13, 20), *ra
 
 ignore_files = ['*eaDir*', *ign_hours, *ign_i, '*\'1*\'*', '*\'2*\'*', '*\'4*\'*', '*\'5*\'*']
 
-#                 '-qmin', '4', '-qmax', '63']
-
 # MP4 options
 # Options used to encode the mp4 video. You may want to read
 # https://trac.ffmpeg.org/wiki/Encode/H.264
@@ -160,8 +155,7 @@ ignore_files = ['*eaDir*', *ign_hours, *ign_i, '*\'1*\'*', '*\'2*\'*', '*\'4*\'*
 # use_assets_cdn = True
 
 # A list of links (tuples (title, URL))
-links = [('Home', '/')],
-#          ('Another link', 'http://example.org')]
+links = [('Hjem', '/')]
 
 # Google Analytics tracking code (UA-xxxx-x)
 # google_analytics = ''

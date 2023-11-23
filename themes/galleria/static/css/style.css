@@ -1,3 +1,7 @@
+#fullscreen {
+  display: none;
+}
+
 body {
   background-color: #242424;
   color: #aaaaaa;
@@ -18,10 +22,6 @@ a, a:link, a:visited {
 
 a:hover {
   color: #dadada;
-}
-
-h1 {
-  text-align: center;
 }
 
 /* remove SMALLCAPS style and dotted underline from some browsers */
