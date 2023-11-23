@@ -6,10 +6,10 @@ ENV GALLERY_TITLE="Gallery"
 WORKDIR /opt
 
 RUN apt-get update && apt-get install -y \
-    python3-pip cron \
+    python3.7 cron \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install sigal
+RUN python3.7 -m pip install pip && python3.7 -m pip install sigal
 
 RUN "3,33 7,8,9,10,11,12,13,14,15,16,17,18 * * * cd /opt && /usr/local/bin/sigal build" | crontab - && service cron start
 
