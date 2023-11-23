@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 #
+# Modified by Sondre to only show images between 07:00 and 18:00 with 30 minutes interval
+# (given that the images are uploaded every 3 minutes)
+#
 # All configuration values have a default; values that are commented out serve
 # to show the default. Default values are specified when modified in this
 # example config file
@@ -7,7 +10,10 @@
 # Gallery title. Can be set here or as the '--title' option of the `sigal
 # build` command, or in the 'index.md' file of the source directory.
 # The priority order is: cli option > settings file > index.md file
-# title = "Sigal test gallery"
+
+import os
+
+title = os.getenv('GALLERY_TITLE', 'Gallery')
 
 # ---------------------
 # General configuration
@@ -32,18 +38,18 @@ theme = 'galleria'
 # processing steps (resize, auto-orient, recompress, and any plugin-specific
 # step).
 # Originals will be symlinked if orig_link = True, else they will be copied.
-# use_orig = False
+# use_orig = True
 
 # ----------------
 # Image processing (ignored if use_orig = True)
 # ----------------
 
 # Size of resized image (default: (640, 480))
-img_size = (800, 600)
+img_size = (1920, 1080)
 
 # Should we use openlayers to show a map of the images where possible?
 # This option only has an effect on the galleria theme for the while.
-show_map = True
+show_map = False
 
 # Pilkit processor used to resize the image
 # (see http://pilkit.readthedocs.org/en/latest/#processors)
@@ -72,7 +78,7 @@ show_map = True
 # --------------------
 
 # Generate thumbnails
-# make_thumbs = True
+make_thumbs = True
 
 # Subdirectory of the thumbnails
 # thumb_dir = 'thumbnails'
@@ -93,20 +99,20 @@ thumb_size = (280, 210)
 # thumb_video_delay = '0'
 
 # Keep original image (default: False)
-keep_orig = True
+# keep_orig = True
 
 # Subdirectory for original images
 # orig_dir = 'original'
 
 # Use symbolic links instead of copying the original images
-orig_link = True
+orig_link = False
 
 # Attribute of Album objects which is used to sort medias (eg 'title'). To sort
 # on a metadata key, use 'meta.key'.
 # albums_sort_attr = 'name'
 
 # Reverse sort for albums
-# albums_sort_reverse = False
+albums_sort_reverse = True
 
 # Attribute of Media objects which is used to sort medias. 'date' can be used
 # to sort with EXIF dates, and 'meta.key' to sort on a metadata key (which then
@@ -120,23 +126,12 @@ orig_link = True
 # The settings take a list of patterns matched with the fnmatch module on the
 # path relative to the source directory:
 # http://docs.python.org/2/library/fnmatch.html
-ignore_directories = []
-ignore_files = ['*.mp4']
+ignore_directories = ['*eaDir*']
+ign_hours = [f'*{str(i).zfill(2)}\'*\'*' for i in range(24) if i not in range(7, 18)]
+ign_i = [f'*\'{str(i).zfill(2)}\'*' for i in [*range(3, 10), *range(13, 20), *range(23, 30), *range(33, 40), *range(43, 50), *range(53, 60)]]
 
-# -------------
-# Video options
-# -------------
+ignore_files = ['*eaDir*', *ign_hours, *ign_i, '*\'1*\'*', '*\'2*\'*', '*\'4*\'*', '*\'5*\'*']
 
-# Video format
-# specify an alternative format, valid are 'webm' (default) and 'mp4'
-# video_format = 'webm'
-
-# Webm options
-# Options used in ffmpeg to encode the webm video. You may want to read
-# http://ffmpeg.org/trac/ffmpeg/wiki/vpxEncodingGuide
-# Be aware of the fact these options need to be passed as strings. If you are
-# using avconv (for example with Ubuntu), you will need to adapt the settings.
-# webm_options = ['-crf', '10', '-b:v', '1.6M',
 #                 '-qmin', '4', '-qmax', '63']
 
 # MP4 options
@@ -165,7 +160,7 @@ ignore_files = ['*.mp4']
 # use_assets_cdn = True
 
 # A list of links (tuples (title, URL))
-# links = [('Example link', 'http://example.org'),
+links = [('Home', '/')],
 #          ('Another link', 'http://example.org')]
 
 # Google Analytics tracking code (UA-xxxx-x)
